@@ -17,6 +17,16 @@
       {% assign featured_image = current_variant.featured_image | default: product.featured_image %}
     {% endif %}
 
+    {% comment %} display free t-shirt if not already in cart - am {% endcomment %}
+    {% assign promo_in_cart = false %}
+    {% if cart.item_count > 0 %}
+      {% for item in cart.items %}
+        {% if item.product.type == 'Apparel free promo' %}
+          {% assign promo_in_cart = true %}
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+
 
     <div class="grid product-single">
       <div class="grid__item large--one-half medium--one-half text-center">
@@ -243,7 +253,7 @@
           
           <h3 class="product-single__title" itemprop="name">{{ product.title }}</h3>
 
-          <div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+          <div itemprop="offers" class="{% if promo_in_cart == true %} hide-promo {% endif %}" itemscope itemtype="http://schema.org/Offer">
             {% comment %}
               Optionally show the 'compare at' or original price of the product.
             {% endcomment %}
@@ -393,9 +403,14 @@
               {% endif %}
 
               <div class="product-single__add-to-cart{% if section.settings.add_to_cart_button_size == 'large' %} product-single__add-to-cart--full-width{% endif %}">
-                {% if product.type == 'Diagnostic Tool'  %}
+                {% if product.type == 'Diagnostic Tool' or product.type == 'Apparel free promo' %}
                   {% if current_variant.available %}
-                  <button type="submit" name="add" id="AddToCart--{{ section.id }}" class="btn btn--add-to-cart{% if section.settings.enable_payment_button %} btn--secondary-accent{% endif %}" onclick="dataLayer.push({ 'ecommerce': null });dataLayer.push({
+                  <button type="submit" name="add" id="AddToCart--{{ section.id }}"
+                      data-type="{{ product.type }}"
+                      data-promo-in-cart="{% if promo_in_cart == true %}true{% else %}false{% endif %}"
+                      class="btn btn--add-to-cart{% if section.settings.enable_payment_button %} btn--secondary-accent{% endif %}
+                          {% if product.type == 'Apparel free promo' and promo_in_cart == true %} already-in-cart {% endif %}" 
+                      onclick="dataLayer.push({ 'ecommerce': null });dataLayer.push({
  'event': 'add_to_cart',
     'ecommerce': {
         'currency': '{{ shop.currency }}',
@@ -412,16 +427,21 @@
 	}
 });">
                     <span class="btn__text">
-
+                      {% if product.type == 'Apparel free promo' and promo_in_cart == true %}
+                        {{ 'products.product.already_in_cart' | t }}
+                      {% else %}
                         {{ 'products.product.add_to_cart' | t }}
-
+                      {% endif %}
                     </span>
                   </button>
                   <h5 id="addToCartSoldOut" style="text-align: center; margin: 0 auto; display:none;">SOLD OUT</h5>
                   <a  id="addToCartJoinWaitlist" style=" display:none;" class="btn btn--add-to-cart{% if section.settings.enable_payment_button %} btn--secondary-accent{% endif %}" href="https://forms.monday.com/forms/2585b7aaae78086490d275b96f07e540?r=use1">Join Waitlist</a>
 
                   {% else %}
-                  <button style="display:none;" type="submit" name="add" id="AddToCart--{{ section.id }}" class="btn btn--add-to-cart{% if section.settings.enable_payment_button %} btn--secondary-accent{% endif %}">
+                  <button style="display:none;" type="submit" name="add" id="AddToCart--{{ section.id }}"
+                      data-type="{{ product.type }}"
+                      data-promo-in-cart="{% if promo_in_cart == true %}true{% else %}false{% endif %}"
+                      class="btn btn--add-to-cart{% if section.settings.enable_payment_button %} btn--secondary-accent{% endif %}">
                     <span class="btn__text">
 
                         {{ 'products.product.add_to_cart' | t }}
@@ -444,7 +464,9 @@
                     {% endfor %}
                   {% endif %}
 
-                <button type="submit" name="add" id="AddToCart--{{ section.id }}" 
+                <button type="submit" name="add" id="AddToCart--{{ section.id }}"
+                  data-type="{{ product.type }}"
+                  data-promo-in-cart="{% if promo_in_cart == true %}true{% else %}false{% endif %}"
                   class="btn btn--add-to-cart{% if section.settings.enable_payment_button %} btn--secondary-accent{% endif %} {% if bundle_button == true %} already-in-cart {% endif %}" 
                   {% if bundle_button == true %} disabled="disabled"{% endif %} 
                   onclick="dataLayer.push({ 'ecommerce': null });dataLayer.push({

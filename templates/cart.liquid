@@ -201,10 +201,23 @@
                           x-data="{ variantId: {{item.variant_id}}, type: '{% if isDiagnosticsPackage %}Dx Bundle{% elsif isSubscription %}Subscription{% else %}other{% endif %}' }"
                           @click="removeProduct(variantId, type, {})">-</div>
                       {% else %}
-                        <div class="qty-item qty-minus"  @click.debounce="syncQuantities($data.productType, $data.variantId, 'minus')">-</div>
+                        {% comment %} limit 1 promo t-shirt - am {% endcomment %}
+                        {% if item.product.type contains 'Apparel free promo' %}
+                          <div class="qty-item qty-minus"></div>
+                        {% else %}
+                          <div class="qty-item qty-minus"  @click.debounce="syncQuantities($data.productType, $data.variantId, 'minus')">-</div>
+                        {% endif %}
+
                       {% endif %}
                       <div class="qty-item qty-value">{{ item.quantity }}</div>
-                      <div class="qty-item qty-plus" @click.debounce="syncQuantities($data.productType, $data.variantId, 'plus')">+</div>
+                      
+                      {% comment %} limit 1 promo t-shirt - am {% endcomment %}
+                      {% if item.product.type contains 'Apparel free promo' %}
+                        <div class="qty-item qty-plus" ></div>
+                      {% else %}
+                        <div class="qty-item qty-plus" @click.debounce="syncQuantities($data.productType, $data.variantId, 'plus')">+</div>
+                      {% endif %}
+
                     </div>
                     
                   </div>

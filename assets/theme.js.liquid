@@ -2643,7 +2643,16 @@ theme.Product = (function() {
         );
 
         // Select a valid variant if available
-        if (variant.available) {
+        // enable ATC if available and (product type not free t-shirt or if is t-shirt, not alreay in cart) - am
+
+        var promoInCart = document.querySelector("[data-promo-in-cart]").getAttribute("data-promo-in-cart");
+        var productType = document.querySelector("[data-type]").getAttribute("data-type");
+        var promoAtcDisable = false;
+        if (promoInCart && productType == "Apparel free promo") {
+          var promoAtcDisable = true;
+        }
+
+        if (variant.available && promoAtcDisable == false) {
           // Available, enable the submit button, change text, show quantity elements
           $(this.selectors.addToCart, this.$container)
             .removeClass("disabled")
@@ -2668,6 +2677,10 @@ theme.Product = (function() {
             $(this.selectors.addToCartJoinWaitlist, this.$container).css("display", "none");
 
           $(this.selectors.soldOutTextBlurb, this.$container).css("display", "none");
+
+        } else if (variant.available && promoAtcDisable == true ) {
+          console.log('log ) leave the ATC button as is for the promo t-shirt');
+
         } else {
           // Sold out. disable the submit button, change text, hide quantity elements
           $(this.selectors.addToCart, this.$container).css("display", "none");
@@ -2675,8 +2688,6 @@ theme.Product = (function() {
           $(this.selectors.addToCartSoldOut, this.$container).css("display", "");
           $(this.selectors.addToCartJoinWaitlist, this.$container).css("display", "");
           $(this.selectors.soldOutTextBlurb, this.$container).css("display", "");
-          console.log(this.selectors.addToCart);
-
 
           $(this.selectors.quantityElements, this.$container).hide();
           $(this.selectors.shopifyPaymentButton, this.$container).hide();
