@@ -410,6 +410,7 @@
                       data-promo-in-cart="{% if promo_in_cart == true %}true{% else %}false{% endif %}"
                       class="btn btn--add-to-cart{% if section.settings.enable_payment_button %} btn--secondary-accent{% endif %}
                           {% if product.type == 'Apparel free promo' and promo_in_cart == true %} already-in-cart {% endif %}" 
+                      {% if product.type == 'Apparel free promo' and promo_in_cart == true %}disabled="disabled" {% endif %}
                       onclick="dataLayer.push({ 'ecommerce': null });dataLayer.push({
  'event': 'add_to_cart',
     'ecommerce': {
