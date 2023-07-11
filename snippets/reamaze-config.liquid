@@ -54,7 +54,7 @@
   _support.outbounds.push({
     id: "91421",
     name: "4th of july Sale",
-    message: "Get ready to celebrate the 4th of July with our Month of Freedom sale! \n\nSAVE $200 OFF OTR Diagnostics \n+ \nFREE t-shirt to celebrate your independence with every order!\n\n**Discount Auto-Applies at checkout**",
+    message: "Get ready to celebrate our Month of Freedom sale! \n\nSAVE $200 OFF OTR Diagnostics \n+ \nFREE t-shirt to celebrate your independence with every order!\n\n**Discount Auto-Applies at checkout**",
     sound: true,
     transient: false,
     botsEnabled: false,
@@ -74,7 +74,26 @@
         target: "_top",
       },
     ],
+    rules: [
+      {
+        type: "url",
+        op: "doesNotContain",
+        value: "https://otrperformance.com/account",
+      },
+      {
+        type: "url",
+        op: "doesNotContain",
+        value: "https://otrperformance.com/pages/faq",
+      },
+      {
+        type: "url",
+        op: "contains",
+        value: "https://otrperformance.com/tools/recurring/portal",
+      },
+    ],
   });
 </script>
 <!-- reamaze_cue_91421_e -->
+
+
 
