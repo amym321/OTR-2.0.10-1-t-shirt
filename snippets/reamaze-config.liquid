@@ -90,10 +90,16 @@
         op: "contains",
         value: "https://otrperformance.com/tools/recurring/portal",
       },
+      {
+        type: "customValue",
+        op: "isTrue",
+        customValue: {% if customer %}true{% else %}false{% endif %},
+      },
     ],
   });
 </script>
 <!-- reamaze_cue_91421_e -->
+
 
 
 
