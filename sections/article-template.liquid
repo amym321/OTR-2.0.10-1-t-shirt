@@ -31,9 +31,9 @@
 
         </div>
 
-{% comment %}         <ul class="tags tags--article inline-list">
+        <ul class="tags tags--article inline-list">
           {% include 'tags-article' %}
-        </ul> {% endcomment %}
+        </ul>
 
         {% if section.settings.social_sharing_blog %}
           {% include 'social-sharing', share_title: article.title, share_permalink: article.url, share_image: article.image %}
@@ -167,11 +167,11 @@
             <a href="{{ article.url }}" class="text-link">{{ 'blogs.article.read_more' | t }} <span class="icon icon-arrow-right" aria-hidden="true"></span></a>
           </p>
 
-          {% if article.tags.size > 0 %}
+<!--           {% if article.tags.size > 0 %}
             <ul style="font-size: 13px" class="tags tags--article inline-list">
               {% include 'tags-article' %}
             </ul>
-          {% endif %}
+          {% endif %} -->
         </div>
       </article>
 
