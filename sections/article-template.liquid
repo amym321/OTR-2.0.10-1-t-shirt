@@ -32,9 +32,9 @@
 
         </div>
 
-        <ul class="tags tags--article inline-list">
+{% comment %}         <ul class="tags tags--article inline-list">
           {% include 'tags-article' %}
-        </ul>
+        </ul> {% endcomment %}
 
         {% if section.settings.social_sharing_blog %}
           {% include 'social-sharing', share_title: article.title, share_permalink: article.url, share_image: article.image %}
