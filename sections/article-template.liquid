@@ -20,12 +20,14 @@
       <div class="grid__item large--four-fifths push--large--one-tenth">
 
         <div class="rte rte--indented-images" itemprop="articleBody">
-<!--     INSERT THE QUIZ CTA    -->
+<!--     INSERT THE CTA SECTIONS    -->
           
         {% assign content_parts = article.content | split: '<!-- INSERT_SNIPPET -->' %}
         {{ content_parts[0] }}
             {% include 'take-our-quiz' %}
         {{ content_parts[1] }}
+             {% include 'buy-more-and-save' %}
+        {{ content_parts[2] }}
 
             {% include 'related-blogs' %}
 
